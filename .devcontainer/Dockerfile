@@ -172,7 +172,7 @@ RUN update-alternatives --install /usr/bin/clang clang /usr/bin/clang-15 100 \
 # Install Android SDK and tools
 ENV ANDROID_HOME=/opt/android-sdk \
     ANDROID_SDK_ROOT=/opt/android-sdk \
-    PATH=${PATH}:/opt/android-sdk/cmdline-tools/latest/bin:/opt/android-sdk/platform-tools:/opt/android-sdk/build-tools/34.0.0
+    PATH=${PATH}:/opt/android-sdk/cmdline-tools/latest/bin:/opt/android-sdk/platform-tools:/opt/android-sdk/build-tools/35.0.0
 
 RUN mkdir -p ${ANDROID_HOME}/cmdline-tools && \
     cd ${ANDROID_HOME}/cmdline-tools && \
@@ -185,12 +185,16 @@ RUN mkdir -p ${ANDROID_HOME}/cmdline-tools && \
 RUN yes | ${ANDROID_HOME}/cmdline-tools/latest/bin/sdkmanager --licenses && \
     ${ANDROID_HOME}/cmdline-tools/latest/bin/sdkmanager \
     "platform-tools" \
+    "platforms;android-36" \
+    "platforms;android-35" \
     "platforms;android-34" \
     "platforms;android-33" \
     "platforms;android-32" \
+    "build-tools;35.0.0" \
     "build-tools;34.0.0" \
     "build-tools;33.0.1" \
     "emulator" \
+    "system-images;android-35;google_apis;x86_64" \
     "system-images;android-34;google_apis;x86_64" \
     "system-images;android-33;google_apis;x86_64"
 

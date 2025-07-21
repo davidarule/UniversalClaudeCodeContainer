@@ -20,7 +20,7 @@ The perfect development container for Claude Code to work in any project type. S
 - **Editors**: Vim, Neovim, Nano (VS Code is the primary IDE)
 
 ### Mobile Development
-- **Android SDK**: API levels 32-34, build tools, emulator, system images
+- **Android SDK**: API levels 32-36, build tools, emulator, system images
 - **Flutter**: Stable channel with web and desktop support
 - **React Native**: CLI, Expo CLI, EAS CLI
 - **Ionic**: CLI with Capacitor support
@@ -173,7 +173,7 @@ claude explain       # Explain code
 ## 📱 Mobile Development
 
 ### Android Setup
-- SDK API levels 32, 33, 34 pre-installed
+- SDK API levels 32, 33, 34, 35, 36 pre-installed
 - Build tools and platform tools included
 - Pre-configured AVD: "Claude_Android_API_34"
 - Start emulator: `android-emulator`
