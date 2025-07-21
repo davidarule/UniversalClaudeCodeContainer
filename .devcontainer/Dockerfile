@@ -158,6 +158,11 @@ RUN echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] https://packages.
     && apt-get update && apt-get install -y google-cloud-cli \
     && apt-get clean -y && rm -rf /var/lib/apt/lists/*
 
+# Install Claude Code CLI
+RUN curl -fsSL https://claude.ai/cli/install.sh | bash \
+    && echo 'export PATH="$HOME/.claude/bin:$PATH"' >> /etc/bash.bashrc \
+    && echo 'export PATH="$HOME/.claude/bin:$PATH"' >> /etc/zsh/zshrc
+
 # Set up alternatives for clang tools
 RUN update-alternatives --install /usr/bin/clang clang /usr/bin/clang-15 100 \
     && update-alternatives --install /usr/bin/clang++ clang++ /usr/bin/clang++-15 100 \
