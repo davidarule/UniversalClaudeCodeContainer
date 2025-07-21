@@ -1,0 +1,184 @@
+{
+    "name": "Universal Claude Code Dev Container",
+    "dockerFile": "Dockerfile.universal",
+    
+    // Features to add to the dev container
+    "features": {
+        "ghcr.io/devcontainers/features/github-cli:1": {},
+        "ghcr.io/devcontainers/features/common-utils:2": {
+            "installZsh": true,
+            "configureZshAsDefaultShell": true,
+            "installOhMyZsh": true,
+            "upgradePackages": true,
+            "username": "codespace",
+            "userUid": "1000",
+            "userGid": "1000"
+        },
+        "ghcr.io/devcontainers/features/docker-in-docker:2": {
+            "version": "latest",
+            "enableNonRootDocker": "true",
+            "moby": "true"
+        }
+    },
+
+    // Configure tool-specific properties
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                // Core development
+                "ms-vscode.cpptools",
+                "ms-vscode.cpptools-extension-pack",
+                "ms-vscode.cmake-tools",
+                "twxs.cmake",
+                "llvm-vs-code-extensions.vscode-clangd",
+                "xaver.clang-format",
+                "notskm.clang-tidy",
+                
+                // Multi-language support
+                "ms-python.python",
+                "ms-python.black-formatter",
+                "ms-python.flake8",
+                "ms-python.mypy-type-checker",
+                "ms-toolsai.jupyter",
+                "ms-vscode.vscode-typescript-next",
+                "bradlc.vscode-tailwindcss",
+                "esbenp.prettier-vscode",
+                "dbaeumer.vscode-eslint",
+                "rust-lang.rust-analyzer",
+                "golang.go",
+                "ms-vscode.vscode-json",
+                "redhat.vscode-yaml",
+                "ms-vscode.powershell",
+                
+                // Mobile development
+                "dart-code.dart-code",
+                "dart-code.flutter",
+                "ms-vscode.vscode-react-native",
+                "ionic.ionic",
+                "vscode-icons-team.vscode-icons",
+                
+                // Cloud and DevOps
+                "ms-vscode.azure-account",
+                "ms-azuretools.vscode-docker",
+                "ms-kubernetes-tools.vscode-kubernetes-tools",
+                "hashicorp.terraform",
+                "amazonwebservices.aws-toolkit-vscode",
+                "googlecloudtools.cloudcode",
+                
+                // Database
+                "ms-mssql.mssql",
+                "ms-ossdata.vscode-postgresql",
+                "mongodb.mongodb-vscode",
+                "redis.redis-for-vscode",
+                
+                // Git and collaboration
+                "GitHub.copilot",
+                "GitHub.copilot-chat",
+                "eamodio.gitlens",
+                "GitHub.vscode-pull-request-github",
+                "mhutchie.git-graph",
+                "donjayamanne.githistory",
+                
+                // Productivity
+                "ms-vscode.hexeditor",
+                "ms-vscode-remote.remote-containers",
+                "ms-vscode-remote.remote-ssh",
+                "ms-vscode.remote-explorer",
+                "ms-vscode.test-adapter-converter",
+                "hbenl.vscode-test-explorer",
+                
+                // Documentation
+                "yzhang.markdown-all-in-one",
+                "davidanson.vscode-markdownlint",
+                "shd101wyy.markdown-preview-enhanced",
+                
+                // Themes and UI
+                "github.github-vscode-theme",
+                "pkief.material-icon-theme",
+                "zhuangtongfa.material-theme",
+                
+                // API development
+                "humao.rest-client",
+                "42crunch.vscode-openapi",
+                "apidog.apidog-vscode"
+            ],
+            "settings": {
+                "terminal.integrated.defaultProfile.linux": "zsh",
+                "editor.formatOnSave": true,
+                "editor.codeActionsOnSave": {
+                    "source.organizeImports": true,
+                    "source.fixAll": true
+                },
+                "C_Cpp.clang_format_style": "file",
+                "cmake.configureOnOpen": true,
+                "cmake.generator": "Ninja",
+                "python.defaultInterpreterPath": "/usr/bin/python3",
+                "python.formatting.provider": "black",
+                "python.linting.enabled": true,
+                "python.linting.flake8Enabled": true,
+                "typescript.preferences.importModuleSpecifier": "relative",
+                "javascript.preferences.importModuleSpecifier": "relative",
+                "go.toolsManagement.autoUpdate": true,
+                "rust-analyzer.checkOnSave.command": "clippy",
+                "flutter.sdkPath": "/opt/flutter",
+                "dart.flutterSdkPath": "/opt/flutter",
+                "java.home": "/usr/lib/jvm/java-17-openjdk-amd64"
+            }
+        }
+    },
+
+    // Forward ports for common development servers
+    "forwardPorts": [3000, 3001, 4200, 5000, 8000, 8080, 8090, 9000],
+    "portsAttributes": {
+        "3000": {
+            "label": "React/Next.js Dev Server"
+        },
+        "4200": {
+            "label": "Angular Dev Server"
+        },
+        "5000": {
+            "label": "Flask/FastAPI Server"
+        },
+        "8000": {
+            "label": "Django/HTTP Server"
+        },
+        "8080": {
+            "label": "Java/Spring Server"
+        }
+    },
+
+    // Use 'postCreateCommand' to run commands after the container is created
+    "postCreateCommand": "bash .devcontainer/post-create-universal.sh",
+
+    // Run as non-root user
+    "remoteUser": "codespace",
+
+    // Mount points for persistent data
+    "mounts": [
+        "source=claude-code-cache,target=/home/codespace/.cache,type=volume",
+        "source=claude-code-config,target=/home/codespace/.config,type=volume",
+        "source=claude-code-local,target=/home/codespace/.local,type=volume"
+    ],
+
+    // Environment variables
+    "containerEnv": {
+        "DISPLAY": ":0",
+        "ANDROID_HOME": "/opt/android-sdk",
+        "FLUTTER_HOME": "/opt/flutter",
+        "JAVA_HOME": "/usr/lib/jvm/java-17-openjdk-amd64"
+    },
+
+    // Security and capability options
+    "runArgs": [
+        "--privileged",
+        "--cap-add=SYS_PTRACE",
+        "--security-opt", "seccomp=unconfined",
+        "--device=/dev/kvm"
+    ],
+
+    // Lifecycle scripts
+    "initializeCommand": "echo 'Initializing Claude Code Universal Container...'",
+    "onCreateCommand": "echo 'Container created successfully'",
+    "updateContentCommand": "echo 'Content updated'",
+    "postStartCommand": "echo 'Container started'"
+}
